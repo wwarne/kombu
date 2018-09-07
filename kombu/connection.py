@@ -543,6 +543,16 @@ class Connection(object):
         _ensured.__name__ = bytes_if_py2('{0}(ensured)'.format(fun.__name__))
         _ensured.__doc__ = fun.__doc__
         _ensured.__module__ = fun.__module__
+        transport_opts = self.transport_options
+        if transport_opts:
+            if 'max_retries' in transport_opts:
+                max_retries = transport_opts['max_retries']
+            if 'interval_start' in transport_opts:
+                interval_start = transport_opts['interval_start']
+            if 'interval_step' in transport_opts:
+                interval_step = transport_opts['interval_step']
+            if 'interval_max' in transport_opts:
+                interval_max = transport_opts['interval_max']
         return _ensured
 
     def autoretry(self, fun, channel=None, **ensure_options):
